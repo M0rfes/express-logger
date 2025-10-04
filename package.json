@@ -1,0 +1,23 @@
+{
+  "name": "express-logger",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "type": "module",
+  "author": "M0rfes <fahimkhan20148@gmail.com>",
+  "description": "A simple example of AsyncLocalStorage with Express.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodes --watch  index.ts"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "uuid": "^13.0.0",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.6.2"
+  }
+}
