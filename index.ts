@@ -37,6 +37,7 @@ app.use(loggerMiddleware);
 
 app.get('/', async (req: express.Request, res: express.Response) => {
   getLogger().info('Request received', { action: 'start' });
+  await controller();
   // ... any async work here ...
   res.send('hello world');
 });
@@ -44,3 +45,10 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 app.listen(3000, () => {
   logger.info('Server is running on port 3000');
 });
+
+
+// No need to pass req to access.
+// the context can be accessed from the asyncLocalStorage
+const controller = async () => {
+  getLogger().info('in controller', { action: 'start' });
+}
