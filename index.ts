@@ -3,11 +3,7 @@ import { AsyncLocalStorage } from 'node:async_hooks'
 import { v4 as uuidv4 } from 'uuid'
 import winston from 'winston'
 
-type Context = {
-  logger: winston.Logger
-}
-
-const asyncLocalStorage = new AsyncLocalStorage<Map<keyof Context, Context[keyof Context]>>()
+const loggerStorage = new AsyncLocalStorage<winston.Logger>()
 
 // Winston logger setup
 const logger = winston.createLogger({
@@ -23,11 +19,11 @@ const logger = winston.createLogger({
 function loggerMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
   const reqId = req.header('x-uuid') || uuidv4()
   const reqLogger = logger.child({ reqId }) // Attach x-uuid to logger
-  asyncLocalStorage.run(new Map([['logger', reqLogger]]), () => next())
+  loggerStorage.run(reqLogger, () => next())
 }
 
 function getLogger() {
-  return asyncLocalStorage.getStore()?.get('logger') || logger
+  return loggerStorage.getStore() || logger
 }
 
 
